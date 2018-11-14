@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'sam-app
+
+  Sample SAM Template for sam-app
+
+  '
+Globals:
+  Function:
+    Timeout: 3
+Outputs:
+  ProductsFunction:
+    Description: Products Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - ProductsFunction
+      - Arn
+  ProductsFunctionIamRole:
+    Description: Implicit IAM Role created for Hello World function
+    Value:
+      Fn::GetAtt:
+      - ProductsFunctionRole
+      - Arn
+  ProductsFunctiondApi:
+    Description: API Gateway endpoint URL for Prod stage for get all products function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/
+Resources:
+  ProductsFunction:
+    Properties:
+      CodeUri: s3://product-api/85a73c9edabcc420dfc219d25ea1da40
+      Environment:
+        Variables:
+          PARAM1: VALUE
+      Events:
+        HelloWorld:
+          Properties:
+            Method: get
+            Path: /products
+          Type: Api
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31
