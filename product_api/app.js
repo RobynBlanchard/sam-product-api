@@ -37,4 +37,22 @@ exports.lambdaHandler = async (event, context) => {
     return response;
 };
 
+exports.postHandler = async (event, context) => {
+    const data = JSON.parse(event.body)
+
+    if (!data.id || !data.title || !data.img_url || !data.price) {
+        response = {
+            'statusCode': 422,
+            'body': JSON.stringify("Missing required fields")
+        }
+    } else {
+        response = {
+            'statusCode': 200,
+            'body': JSON.stringify("Product created")
+        };
+    }
+
+    return response;
+};
+
 
