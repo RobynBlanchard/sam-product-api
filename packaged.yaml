@@ -15,7 +15,7 @@ Outputs:
       - ProductsFunction
       - Arn
   ProductsFunctionIamRole:
-    Description: Implicit IAM Role created for Hello World function
+    Description: Implicit IAM Role created for Products API function
     Value:
       Fn::GetAtt:
       - ProductsFunctionRole
@@ -23,16 +23,16 @@ Outputs:
   ProductsFunctiondApi:
     Description: API Gateway endpoint URL for Prod stage for get all products function
     Value:
-      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/products/
 Resources:
   ProductsFunction:
     Properties:
-      CodeUri: s3://product-api/85a73c9edabcc420dfc219d25ea1da40
+      CodeUri: s3://product-api/e3c2bfaae880d435091cf44f473cc559
       Environment:
         Variables:
           PARAM1: VALUE
       Events:
-        HelloWorld:
+        Products:
           Properties:
             Method: get
             Path: /products
