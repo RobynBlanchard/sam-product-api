@@ -99,7 +99,7 @@ After deployment is complete you can run the following command to retrieve the A
 aws cloudformation describe-stacks \
     --stack-name sam-app \
     --query 'Stacks[].Outputs'
-``` 
+```
 
 ## Testing
 
@@ -146,3 +146,12 @@ Next, you can use the following resources to know more about beyond hello world 
 
 * [AWS Serverless Application Repository](https://aws.amazon.com/serverless/serverlessrepo/)
 # sam-product-api
+
+## Deploy
+
+sam package \
+    --template-file template.yaml \
+    --output-template-file packaged.yaml \
+    --s3-bucket product-api --profile robyn --region eu-west-1
+
+aws cloudformation deploy --template-file /Users/robynb/Documents/non-work/product-api-aws-sam/sam-app/packaged.yaml --stack-name product-api-stack --profile robyn --region eu-west-1 --capabilities CAPABILITY_IAM
