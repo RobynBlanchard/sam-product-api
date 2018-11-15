@@ -55,4 +55,36 @@ exports.postHandler = async (event, context) => {
     return response;
 };
 
+exports.putHandler = async (event, context) => {
+    const data = JSON.parse(event.body)
+    const id = data.id;
+    console.log(typeof(id));
+
+    if (id) {
+        const productIndex = db.findIndex(el => el.id === id);
+        const productFound = db[productIndex];
+
+        const updatedProduct = {
+            id: productFound.id,
+            title: data.title || productFound.title,
+            price: data.price || productFound.price,
+            img_url: data.img_url || productFound.img_url
+        };
+
+        db.splice(productIndex, 1, updatedProduct);
+
+        console.log(db);
+
+        response = {
+            'statusCode': 200,
+            'body': JSON.stringify("Product updated")
+        };
+    }
+
+    // TODO
+    // ELSE
+
+    return response;
+};
+
 
