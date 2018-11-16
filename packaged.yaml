@@ -25,9 +25,24 @@ Outputs:
     Value:
       Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/products/
 Resources:
+  AddProductFunction:
+    Properties:
+      CodeUri: s3://product-api/ea96a7926886de6e387f1f0b30d70eba
+      Environment:
+        Variables:
+          PARAM1: VALUE
+      Events:
+        HelloWorld:
+          Properties:
+            Method: post
+            Path: /products
+          Type: Api
+      Handler: app.postHandler
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
   ProductsFunction:
     Properties:
-      CodeUri: s3://product-api/e3c2bfaae880d435091cf44f473cc559
+      CodeUri: s3://product-api/ea96a7926886de6e387f1f0b30d70eba
       Environment:
         Variables:
           PARAM1: VALUE
@@ -38,6 +53,21 @@ Resources:
             Path: /products
           Type: Api
       Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+  UpdateProductFunction:
+    Properties:
+      CodeUri: s3://product-api/ea96a7926886de6e387f1f0b30d70eba
+      Environment:
+        Variables:
+          PARAM1: VALUE
+      Events:
+        HelloWorld:
+          Properties:
+            Method: put
+            Path: /products
+          Type: Api
+      Handler: app.putHandler
       Runtime: nodejs8.10
     Type: AWS::Serverless::Function
 Transform: AWS::Serverless-2016-10-31
